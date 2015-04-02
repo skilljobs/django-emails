@@ -6,7 +6,8 @@ What's important is that it gets delivered and read.
 
 ...and when email gets delivered, sender will receive a lot of emails too, automated and hand-typed, and will need to process it.
 
-Some things that need to be in place include:
+Measures that need to be in place include:
+
 - bounce processing
 - feedback loop processing for major email providers (Yahoo, AOL, Outlook-Hotmail...)
 - unsubscribe headers (Gmail and others)
