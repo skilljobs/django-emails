@@ -12,6 +12,8 @@ Convert HTML email to TEXT alternative version
 Test usage:
     email_body = open('email.html').read()
     print render_as_text(email_body)
+
+Inspired by HTML to markdown.
 '''
 
 from textwrap import wrap
