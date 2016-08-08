@@ -1,4 +1,4 @@
-'''
+"""
 Convert HTML email to TEXT alternative version
 
 - Preserve text and URLs
@@ -14,18 +14,20 @@ Test usage:
     print render_as_text(email_body)
 
 Inspired by HTML to markdown.
-'''
+"""
 
 from textwrap import wrap
 from lxml.html import document_fromstring
 
 WRAP = 55
 
+
 def strip_whitespace(s):
     s = s.replace('\n', ' ')
     while '  ' in s:
         s = s.replace('  ', ' ')
     return s
+
 
 def justify_str(s, width):
     right, w = s, width
@@ -37,9 +39,10 @@ def justify_str(s, width):
         for i in range(len(items) - 1):
             items[i] += ' '
             left_count -= 1
-            if left_count < 1:  
+            if left_count < 1:
                 break
     return ''.join(items)
+
 
 def justify_p(para, width):
     splitted = wrap(para, width)
@@ -50,6 +53,7 @@ def justify_p(para, width):
             aligned = justify_str(line, width)
         wrapped.append(aligned)
     return '\n'.join(wrapped)
+
 
 def render_as_text(html):
     dom = document_fromstring(strip_whitespace(html))
@@ -70,12 +74,12 @@ def render_as_text(html):
                 s += e.text
             if e.tail:
                 s += e.tail
-            if e.tag == 'a' and e.attrib.get('class','') != 'noalt':
+            if e.tag == 'a' and e.attrib.get('class', '') != 'noalt':
                 href = e.attrib['href']
                 if 'Confirm' in e.text_content():
-                    href = '' # don't show email confirmation link twice
-                else:
-                    href = href.split('?')[0] # don't show tracking query strings in text
+                    href = ''  # don't show email confirmation link twice
+                else:  # don't show tracking query strings in text
+                    href = href.split('?')[0]
                 s += '\n' + href + '\n'
             if e.tag == 'h3':
                 s += '\n' + '-' * len(e.text) + '\n'
