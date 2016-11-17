@@ -23,17 +23,29 @@ class Email(models.Model):
         db_table = 'emails'
 
 
-class UserSubscription(models.Model):
-    ''' Abstract subscription model to subclass.
-    Add boolean fields to your subclass to make your own subscriptions
-    named recieve_x; e.g.: receive_newsletter, receive_alerts etc.
-    This will allow users to subscribe to different types of non-transactional emails.
-    '''
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
-    receive_email = models.BooleanField('E-mail', default=True)
+class MailoutCategory(models.Model):
+    key = models.CharField(max_length=12, primary_key=True)
+    default = models.BooleanField()
+    title = models.CharField(max_length=60)
 
     def __str__(self):
-        return str(self.pk)
+        return self.title
 
-    class Meta:
-        abstract = True
+
+class MailoutUser(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    category = models.ForeignKey('emails.MailoutCategory')
+
+    def __str__(self):
+        return 'User #%s receives %s.' % (self.user_id, self.category_id)
+
+
+def subscribe_all(user):
+    for mc in MailoutCategory.objects.filter(default=True):
+        mu = MailoutUser(user=user, category=mc)
+        mu.save()
+
+
+def unsubscribe_all(user):
+    for mu in MailoutUser.objects.filter(user=user):
+        mu.delete()

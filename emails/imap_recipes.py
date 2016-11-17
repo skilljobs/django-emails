@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from subs.models import Subscription
 from django.conf import settings
 from emails import send
+from emails.models import unsubscribe_all
 import re
 
 User = get_user_model()
@@ -35,11 +35,7 @@ def unsubscribe_email(email):
     for ad in user.ad_set.all():
         ad.off = True
         ad.save(staff=True)
-    s, created = Subscription.objects.get_or_create(user=user)
-    s.receive_new = False
-    s.receive_advice = False
-    s.receive_alerts = False
-    s.save()
+    unsubscribe_all(user)
     return 'Turned off ads for %s.' % email
 
 

@@ -1,0 +1,13 @@
+{% extends 'account/base.html' %}
+{% block title %}Email preferences{% endblock %}
+{% block content %}
+<a href="{% url 'edit-user' u.pk %}" class="close">&times;</a>
+<form method="POST" action="#" class="auth">
+	<h1>Email preferences</h1>
+	<ul class="checkboxes">
+	{{ form.choices }}
+	</ul>
+	{% csrf_token %}
+    <p class="foot"><button class="btn">Update preferences</button></p>
+</form>
+{% endblock %}

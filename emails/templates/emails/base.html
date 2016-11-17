@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <style>
+     a.pic img{border:1px solid #ddd;border-radius:4px;margin-bottom:5px}
+     @media (max-width: 480px){
+         div#header{text-align:center}
+         span.menu{display:block;float:none !important;padding-left:0 !important}
+         div.responsive{width:280px !important;clear:both;float:none;text-align:center}
+     }
+    </style>
+</head>
+<body style="padding:10px 0;font:13px 'Helvetica Neue',sans-serif">
+<div style="max-width:620px">
+    <div id="header" style="padding:10px 10px">
+        <a class="noalt" href="{{ site_url }}{% confirm_email %}">
+            <img style="border:0" src="{{ site_url }}/i/logo.png?{{ version }}" alt="{{ site_name }}">
+        </a>
+        <span class="menu" style="float:right;padding-left:10px;font-size:12px;line-height:30px;vertical-align:bottom">
+                <a style="{% style 'a' %};padding-right:20px"
+                   href="{{ site_url }}{{ user.get_absolute_url }}{% confirm_email %}">Your profile</a>
+
+        </span>
+    </div>
+    <div id="content" style="margin:10px;padding:15px 0 30px 0;color:#333;clear:both;border:1px solid #ddd;border-width:1px 0">
+        {% block hi %}<h2>Hello {{ user.first_name }},</h2>{% endblock %}
+        {% block content %}{% endblock %}
+        <div style="clear:both"></div>
+    </div>
+    <div id="footer" style="margin:10px;color:#888">
+        {% block footnote1 %}{% endblock %}
+        {% block footnote %}
+            Don't want to receive email notifications?
+            <a style="{% style 'a' %}" href="{{ site_url }}{% url 'my_email_preferences' %}{% confirm_email %}">
+				Adjust your message preferences</a>.
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
