@@ -18,6 +18,7 @@ This app contains a set of tools needed including:
 - email storage and archiving
 - responsive HTML emails
 
+Read Gmail Bulk Senders Guidelines: https://support.google.com/mail/answer/81126
 
 DNS measures
 ------------
