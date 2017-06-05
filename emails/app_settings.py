@@ -5,4 +5,4 @@ def fix_typo_email(user, new):
     pass
 
 
-FIX_TYPO_EMAIL = getattr(settings, 'FIX_TYPO_EMAIL', fix_typo_email)
+EMAILS_FIX_TYPOS = getattr(settings, 'EMAILS_FIX_TYPOS', fix_typo_email)

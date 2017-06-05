@@ -65,7 +65,7 @@ def fix_typos(dry_run=True):
                 new = u.email.replace(bad, good)
                 print(u.username, u.email, '->', new)
                 if not dry_run:
-                    app_settings.FIX_TYPO_EMAIL(u, new)
+                    app_settings.EMAILS_FIX_TYPOS(u, new)
 
 
 class Command(BaseCommand):
