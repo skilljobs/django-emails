@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.conf import settings
 from emails import send
-from emails.models import unsubscribe_all
+from emails.models import Email, unsubscribe_all
 import re
 
 User = get_user_model()
@@ -96,6 +96,9 @@ def note_bounce(msg):
         print(address)
         user = get_user(address)
         if user:
+            email = Email.objects.filter(user=user).last()
+            email.bounced = True
+            email.save()
             if not user.bounce:
                 user.bounce = 0
             user.bounce += 1

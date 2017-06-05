@@ -9,6 +9,7 @@ class Email(models.Model):
     subject = models.CharField(max_length=150)
     body = models.TextField()
     at = models.DateTimeField(default=datetime.now)
+    bounced = models.BooleanField(default=False)
 
     prefetch = ['to']
 

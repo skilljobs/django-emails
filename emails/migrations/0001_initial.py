@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('subject', models.CharField(max_length=150)),
                 ('body', models.TextField()),
                 ('at', models.DateTimeField(default=datetime.datetime.now)),
+                ('bounced', models.BooleanField(default=False)),
                 ('to', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='emails', to=settings.AUTH_USER_MODEL)),
             ],
             options={
