@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
 from django.contrib.auth import get_user_model
+from emails import app_settings
 
 User = get_user_model()
 
@@ -64,9 +65,7 @@ def fix_typos(dry_run=True):
                 new = u.email.replace(bad, good)
                 print(u.username, u.email, '->', new)
                 if not dry_run:
-                    pass
-                    # implement to suit your tastes
-                    # new_email(u, new)
+                    app_settings.FIX_TYPO_EMAIL(u, new)
 
 
 class Command(BaseCommand):
