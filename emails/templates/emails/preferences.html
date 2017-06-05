@@ -5,6 +5,7 @@
 <form method="POST" action="#" class="auth">
 	<h1>Email preferences</h1>
 	<ul class="checkboxes">
+	{{ form.errors }}
 	{{ form.choices }}
 	</ul>
 	{% csrf_token %}

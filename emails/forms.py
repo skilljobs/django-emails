@@ -6,5 +6,6 @@ class EmailPreferenceForm(forms.Form):
     choices = forms.MultipleChoiceField(
         choices=list(MailoutCategory.objects.filter(default=True)\
                                             .values_list('key', 'title')),
-        widget=forms.CheckboxSelectMultiple
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )

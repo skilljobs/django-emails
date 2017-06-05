@@ -8,7 +8,7 @@ from emails.models import MailoutCategory, MailoutUser
 User = get_user_model()
 
 @login_required
-def preferences(request, user_pk):
+def preferences(request, user_pk=None):
     user = request.user
     if user_pk and user.is_staff:
         user = get_object_or_404(User, pk=int(user_pk))
