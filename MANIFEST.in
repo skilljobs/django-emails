@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+include requirements.txt
+graft emails
+recursive-include emails/templates *
+recursive-include emails/docs *
