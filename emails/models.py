@@ -11,7 +11,7 @@ class Email(models.Model):
     at = models.DateTimeField(default=datetime.now)
     bounced = models.BooleanField(default=False)
 
-    prefetch = ['to']
+    prefetch = ['to', 'to_subscription']
 
     def __str__(self):
         return 'TO: %s, %s' % (self.to, self.subject)
