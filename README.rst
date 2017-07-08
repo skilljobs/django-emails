@@ -16,7 +16,8 @@ This app contains a set of tools needed including:
 - convert HTML email to TEXT alternative
 - DKIM (DomainKeys Identified Mail) and DNS measures
 - email storage and archiving
-- responsive HTML emails
+- models and UI to manage user's subscriptions to email categories
+- responsive HTML email template
 
 Read Gmail Bulk Senders Guidelines: https://support.google.com/mail/answer/81126
 
