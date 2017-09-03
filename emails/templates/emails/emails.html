@@ -1,0 +1,13 @@
+{% extends 'account/base.html' %}
+{% block content %}
+<a href="{% url 'edit-user' user.pk %}" class="close">&times;</a>
+<form method="POST" action="#" class="auth">
+    <h1>Manage user's email addresses</h1>
+    {% for form in emails %}
+        {{ form.as_ul }}
+    {% endfor %}
+    {% csrf_token %}
+    {{ emails.management_form }}
+    <p><button class="btn success">Update email addresses</button></p>
+</form>
+{% endblock %}
