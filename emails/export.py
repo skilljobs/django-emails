@@ -1,4 +1,4 @@
-from django.http import StreamingHttpResponse
+from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.utils import formats
@@ -9,30 +9,23 @@ import itertools
 User = get_user_model()
 
 
-class Buffer(object):
-    """ File-like interface
-    """
-    def write(self, value):
-        return value
+def csv_out(qs, headers, row_export_func, file_name='export'):
+    """ Export queryset as a CSV response
 
-
-def stream_csv_out(qs, headers, row_export_func, file_name='export'):
-    """ Stream a large queryset as a CSV response
-
-    :param qs: queryset to stream out
+    :param qs: queryset to output
     :param headers: list of CSV headers
     :param row_export_func: returns a list of data attrs to export per object/qdict
     :param file_name: a filename this CSV will download as
 
-    :return: a streaming response with CSV data that will save as a download
+    :return: a response with CSV data that will save as a download
     """
-    pseudo_buffer = Buffer()
-    writer = csv.writer(pseudo_buffer)
-    generate_rows = (writer.writerow(row_export_func(u)) for u in qs.iterator())
-    rows_with_header = itertools.chain(writer.writerow(headers), generate_rows)
-
-    response = StreamingHttpResponse(rows_with_header, content_type='text/csv')
+    response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="%s.csv"' % file_name
+
+    writer = csv.writer(response)
+    writer.writerow(headers)
+    for u in qs.iterator():
+        writer.writerow(row_export_func(u))
     return response
 
 
@@ -46,7 +39,7 @@ def export_emails(filters, file_name='export-email'):
         return [u.id, formats.date_format(u.date_joined, "SHORT_DATETIME_FORMAT"),
                 u.email, u.first_name, u.last_name]
 
-    return stream_csv_out(qs, headers, row_export_func, file_name=file_name)
+    return csv_out(qs, headers, row_export_func, file_name=file_name)
 
 
 @staff_member_required
