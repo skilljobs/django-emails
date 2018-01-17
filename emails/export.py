@@ -36,7 +36,7 @@ def stream_csv_out(qs, headers, row_export_func, file_name='export'):
     return response
 
 
-def export_emails(filters, file_name = 'export-email'):
+def export_emails(filters, file_name='export-email'):
     qs = User.objects.filter(**filters).order_by('-id')
 
     headers = ['User ID', 'Date joined',
@@ -50,5 +50,5 @@ def export_emails(filters, file_name = 'export-email'):
 
 
 @staff_member_required
-def email_export(request, filters):
+def email_export(request, filters={}):
     return export_emails(filters)
