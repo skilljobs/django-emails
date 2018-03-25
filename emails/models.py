@@ -5,7 +5,8 @@ from datetime import datetime
 
 class Email(models.Model):
     """ Monitor emails sent """
-    to = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='emails')
+    to = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='emails',
+                           on_delete=models.CASCADE)
     subject = models.CharField(max_length=150)
     body = models.TextField()
     at = models.DateTimeField(default=datetime.now)
@@ -34,8 +35,10 @@ class MailoutCategory(models.Model):
 
 
 class MailoutUser(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    category = models.ForeignKey('emails.MailoutCategory')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    category = models.ForeignKey('emails.MailoutCategory',
+                                 on_delete=models.PROTECT)
 
     def __str__(self):
         return 'User #%s receives %s.' % (self.user_id, self.category_id)
