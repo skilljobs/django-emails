@@ -35,13 +35,25 @@ class MailoutCategory(models.Model):
 
 
 class MailoutUser(models.Model):
+    """Consent to send a category of emails to a user
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     category = models.ForeignKey('emails.MailoutCategory',
                                  on_delete=models.PROTECT)
+    created_at = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
         return 'User #%s receives %s.' % (self.user_id, self.category_id)
+
+
+def subscribe_user_to(user, category_key):
+    mc = MailoutCategory.objects.filter(key=category_key).first()
+    if mc:
+        mu = MailoutUser(user=user, category=mc)
+        mu.save()
+        return mu
+    return
 
 
 def subscribe_all(user):
