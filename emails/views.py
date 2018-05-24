@@ -7,6 +7,7 @@ from emails.models import MailoutCategory, MailoutUser
 
 User = get_user_model()
 
+
 @login_required
 def preferences(request, user_pk=None):
     user = request.user
