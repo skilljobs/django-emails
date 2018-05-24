@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 
 
 class Email(models.Model):
@@ -9,7 +9,7 @@ class Email(models.Model):
                            on_delete=models.CASCADE)
     subject = models.CharField(max_length=150)
     body = models.TextField()
-    at = models.DateTimeField(default=datetime.now)
+    at = models.DateTimeField(default=timezone.now)
     bounced = models.BooleanField(default=False)
 
     prefetch = ['to', 'to__subscription']
@@ -41,7 +41,7 @@ class MailoutUser(models.Model):
                              on_delete=models.CASCADE)
     category = models.ForeignKey('emails.MailoutCategory',
                                  on_delete=models.PROTECT)
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return 'User #%s receives %s.' % (self.user_id, self.category_id)
