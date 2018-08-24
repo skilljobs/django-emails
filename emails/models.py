@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -17,9 +18,8 @@ class Email(models.Model):
     def __str__(self):
         return 'TO: %s, %s' % (self.to, self.subject)
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'email', [self.pk]
+        return reverse('email', kwargs={'pk': self.pk})
 
     class Meta:
         db_table = 'emails'
