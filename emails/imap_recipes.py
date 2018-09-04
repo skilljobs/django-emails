@@ -24,7 +24,8 @@ def get_user(email):
         u = users.order_by('-seen')[0]
         return u
     except (IndexError, User.DoesNotExist):
-        print('no such address: ' + email)  # don't notify the sender
+        if settings.DEBUG:
+            print('no such address: ' + email)  # don't notify the sender
         return False
 
 
@@ -91,9 +92,12 @@ def note_bounce(msg):
     addresses = list(set(EMAIL_RE.findall(str(msg))))
     addresses = [x for x in addresses
                  if settings.EMAIL_DOMAIN not in x and
-                 'mailer-daemon@' not in x.lower()]
+                 'mailer-daemon@' not in x.lower() and
+                 'postmaster@' not in x.lower() and
+                 'mx.google.com' not in x.lower()]
     for address in addresses:
-        print(address)
+        if settings.DEBUG:
+            print(address)
         user = get_user(address)
         if user:
             email = Email.objects.filter(to=user).last()
@@ -103,5 +107,6 @@ def note_bounce(msg):
                 user.bounce = 0
             user.bounce += 1
             user.save()
-            print("Bounce noted.")
+            if settings.DEBUG:
+                print("Bounce noted.")
     return 'Done.'
