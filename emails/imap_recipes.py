@@ -109,4 +109,5 @@ def note_bounce(msg):
             user.save()
             if settings.DEBUG:
                 print("Bounce noted.")
-    return 'Done.'
+    if settings.DEBUG:
+        return 'Done.'
