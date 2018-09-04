@@ -96,7 +96,7 @@ def note_bounce(msg):
         print(address)
         user = get_user(address)
         if user:
-            email = Email.objects.filter(user=user).last()
+            email = Email.objects.filter(to=user).last()
             email.bounced = True
             email.save()
             if not user.bounce:
