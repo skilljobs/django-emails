@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class Email(models.Model):
-    """ Monitor emails sent """
+    """Monitor emails sent."""
     to = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='emails',
                            on_delete=models.CASCADE)
     subject = models.CharField(max_length=150)
@@ -26,6 +26,7 @@ class Email(models.Model):
 
 
 class MailoutCategory(models.Model):
+    """Category of emails being sent out."""
     key = models.CharField(max_length=12, primary_key=True)
     default = models.BooleanField()
     title = models.CharField(max_length=60)
@@ -35,8 +36,7 @@ class MailoutCategory(models.Model):
 
 
 class MailoutUser(models.Model):
-    """Consent to send a category of emails to a user
-    """
+    """Consent to send a category of emails to a user."""
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     category = models.ForeignKey('emails.MailoutCategory',

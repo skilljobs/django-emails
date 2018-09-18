@@ -43,7 +43,7 @@ def email(user, subj, template, context, check_pref=False,
     body = render_to_string('emails/%s.html' % template, context)
     text = render_as_text(body)
 
-    em.body = body + '<!--\n' + text + '\n-->'
+    em.body = '%s<!--\n%s\n-->' % (body, text)
     em.save()
     headers = {
         'List-Unsubscribe': '<mailto:%s>' % UNSUBSCRIBE_EMAIL,
