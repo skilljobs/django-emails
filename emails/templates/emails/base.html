@@ -17,11 +17,13 @@
 <div style="max-width:620px">
     <div id="header" style="padding:10px 10px">
         <a class="noalt" href="{{ site_url }}{% confirm_email %}">
-            <img style="border:0" src="{{ site_url }}/i/logo.png?{{ version }}" alt="{{ site_name }}">
+            <img style="border:0" src="{{ site_url }}/i/logo.png?{{ version }}"
+                 alt="{{ site_name }}">
         </a>
         <span class="menu" style="float:right;padding-left:10px;font-size:12px;line-height:30px;vertical-align:bottom">
                 <a style="{% style 'a' %};padding-right:20px"
-                   href="{{ site_url }}{{ user.get_absolute_url }}{% confirm_email %}">Your profile</a>
+                   href="{{ site_url }}{{ user.get_absolute_url }}{% confirm_email %}">
+                    Your profile</a>
 
         </span>
     </div>
@@ -35,7 +37,9 @@
         {% block footnote %}
             Don't want to receive email notifications?
             <a style="{% style 'a' %}" href="{{ site_url }}{% url 'my_email_preferences' %}{% confirm_email %}">
-				Adjust your message preferences</a>.
+				Adjust your message preferences</a> or
+            <a style="{% style 'a' %}" href="{{ site_url }}{% url 'unsubscribe' user.pk em.pk category %}">
+				Unsubscribe</a>
         {% endblock %}
     </div>
 </div>

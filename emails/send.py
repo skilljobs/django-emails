@@ -37,7 +37,8 @@ def email(user, subj, template, context, check_pref=False,
         'user': user,
         'subject': subj,  # use original short subject here
         'template': template,  # for tracking
-        'em': em
+        'em': em,
+        'category': check_pref or ''
     })
 
     body = render_to_string('emails/%s.html' % template, context)

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -31,3 +31,19 @@ def preferences(request, user_pk=None):
         'form': form,
         'u': user
     })
+
+
+def unsubscribe(request, user_pk, pk, category):
+    """Unsubscribe view.
+
+    Checks that email user matches user and proceeds to unsubscribe.
+    """
+    unsubscribe_user = User.objects.get(pk=user_pk)
+    email = Email.objects.get(pk=pk)
+    if email.user == unsubscribe_user:
+        c = MailoutCategory.objects.get(key=category)
+        s = MailoutUser(user=user, category=c)
+        s.delete()
+        messages.success(request,
+                         'You were unsubscribed from %s.' % c.title)
+    return redirect(unsubscribe_user)
