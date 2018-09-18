@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from emails.forms import EmailPreferenceForm
-from emails.models import MailoutCategory, MailoutUser
+from emails.models import Email, MailoutCategory, MailoutUser
 
 User = get_user_model()
 
