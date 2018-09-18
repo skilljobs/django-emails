@@ -38,12 +38,15 @@ def unsubscribe(request, user_pk, pk, category):
 
     Checks that email user matches user and proceeds to unsubscribe.
     """
-    unsubscribe_user = User.objects.get(pk=user_pk)
-    email = Email.objects.get(pk=pk)
+    unsubscribe_user = get_object_or_404(User, pk=user_pk)
+    email = get_object_or_404(Email, pk=pk)
     if email.to == unsubscribe_user:
         c = MailoutCategory.objects.get(key=category)
-        s = MailoutUser(user=unsubscribe_user, category=c)
-        s.delete()
-        messages.success(request,
-                         'You were unsubscribed from %s.' % c.title)
+        try:
+            s = MailoutUser.objects.get(user=unsubscribe_user, category=c)
+            s.delete()
+            messages.success(request,
+                             'You were unsubscribed from %s.' % c.title)
+        except MailoutUser.DoesNotExist:
+            messages.info(request, 'You are no longer subscribed.')
     return redirect(unsubscribe_user)
