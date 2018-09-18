@@ -42,7 +42,7 @@ def unsubscribe(request, user_pk, pk, category):
     email = Email.objects.get(pk=pk)
     if email.to == unsubscribe_user:
         c = MailoutCategory.objects.get(key=category)
-        s = MailoutUser(user=user, category=c)
+        s = MailoutUser(user=unsubscribe_user, category=c)
         s.delete()
         messages.success(request,
                          'You were unsubscribed from %s.' % c.title)
