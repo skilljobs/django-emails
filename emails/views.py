@@ -46,7 +46,7 @@ def unsubscribe(request, user_pk, pk, category):
             s = MailoutUser.objects.get(user=unsubscribe_user, category=c)
             s.delete()
             messages.success(request,
-                             'You were unsubscribed from %s.' % c.title)
+                             'You were unsubscribed from %s.' % c.title.lower())
         except MailoutUser.DoesNotExist:
             messages.info(request, 'You are no longer subscribed.')
     return redirect(unsubscribe_user)
