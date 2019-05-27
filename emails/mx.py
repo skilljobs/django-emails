@@ -1,7 +1,34 @@
 # sudo pip install dnspython
 import dns.resolver
 
-whitelist = 'gmail.com googlemail.com hotmail.com hotmail.co.uk hotmail.fr hotmail.it outlook.com live.com live.co.uk live.de live.ie yahoo.com yahoo.co.uk yahoo.es yahoo.fr aol.com gmx.com gmx.de sky.com bt.com btinternet.com ntlworld.com talktalk.net interia.pl wp.pl seznam.cz'
+whitelist = """
+gmail.com
+googlemail.com
+hotmail.com
+hotmail.co.uk
+hotmail.fr
+hotmail.it
+outlook.com
+live.com
+live.co.uk
+live.de
+live.ie
+yahoo.com
+yahoo.co.uk
+yahoo.es
+yahoo.fr
+aol.com
+gmx.com
+gmx.de
+sky.com
+bt.com
+btinternet.com
+ntlworld.com
+talktalk.net
+interia.pl
+wp.pl
+seznam.cz
+"""
 
 
 def check_mx(email):
@@ -12,7 +39,7 @@ def check_mx(email):
     if '@' not in email:
         return
     domain = email.split('@')[-1]
-    if domain in whitelist.split():
+    if domain in whitelist.strip().split():
         return True
 
     resolver = dns.resolver.Resolver()
