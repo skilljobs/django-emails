@@ -83,10 +83,13 @@ class Idler(object):
                 msg = parse(data[0][1])
                 skip_spf = any([True for s in SKIP_SPF if s in msg['From']])
                 if 'pass' in msg.get('Received-SPF', '') or skip_spf:
-                    print(recipe(msg))
+                    result = recipe(msg)
+                    if result and settings.DEBUG:
+                        print(result)
                 else:
                     from_fallback = msg.get('From', 'No sender')
-                    print("Didn't pass sender checks: %s" % from_fallback)
+                    if settings.DEBUG:
+                        print("Didn't pass sender checks: %s" % from_fallback)
                 self.M.uid('store', num, '+FLAGS', 'Seen')
         self.M.expunge()
 

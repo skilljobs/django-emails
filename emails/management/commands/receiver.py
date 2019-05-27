@@ -7,4 +7,4 @@ class Command(BaseCommand):
         try:
             receive(10 * 60)  # Cron will restart it every 10 mins.
         except IMAP4_SSL.abort:
-            return ''  # no output
+            return
