@@ -7,13 +7,13 @@ and RECIPES, a dictionary of processing recipes.
 """
 from email import message_from_string as parse
 from threading import Thread, Event
-import settings
+from django.conf import settings
 import time
 
 try:  # compatibility with version on PyPI
-    from imaplib2.imaplib2 import IMAP4_SSL
+    from imaplib2.imaplib2 import IMAP4_SSL, IMAP4
 except ImportError:
-    from imaplib2 import IMAP4_SSL
+    from imaplib2 import IMAP4_SSL, IMAP4
 
 RECIPES = {}
 try:
@@ -65,8 +65,10 @@ class Idler(object):
                 if not self.event.isSet():
                     self.needsync = True
                     self.event.set()
-
-            self.M.idle(callback=callback)
+            try:
+                self.M.idle(callback=callback)
+            except IMAP4.abort:
+                return ''
             self.event.wait()
             if self.needsync:
                 self.event.clear()
