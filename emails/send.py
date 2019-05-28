@@ -23,7 +23,7 @@ def email(user, subj, template, context, check_pref=False,
         if not s:
             return
 
-    subject = 'Hi %s, %s' % (user.first_name, subj)
+    subject = subj
     from_email = "%s <%s>" % (settings.NAME, from_email)
     if 'Feedback' in subj:
         subject = subj
