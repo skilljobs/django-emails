@@ -62,8 +62,8 @@ def fix_typos(dry_run=True):
                 d = {'email__icontains': bad}
 
             for u in User.objects.filter(**d):
-                new = u.email.replace(bad, good)
-                print(u.username, u.email, '->', new)
+                new = u.email.lower().replace(bad, good)
+                print(u.email, '->', new)
                 if not dry_run:
                     app_settings.EMAILS_FIX_TYPOS(u, new)
 
