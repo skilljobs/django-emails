@@ -5,9 +5,9 @@ from django.conf import settings
 from allauth.account.models import EmailAddress
 
 
-def reset_bounces(user):
-    user.bounce = None
-    user.save()
+def reset_bounces(profile):
+    profile.bounce = None
+    profile.save()
 
 
 def send_confirm_primary(user, request=False):
