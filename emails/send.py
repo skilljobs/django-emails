@@ -12,7 +12,6 @@ def email(user, subj, template, context, check_pref=False,
           from_email=settings.DEFAULT_FROM_EMAIL):
 
     from emails.models import Email
-    from subs.models import Subscription
 
     if user.bounce not in (None, 0, 1):  # 1 bounce is ok, but not more
         return False
