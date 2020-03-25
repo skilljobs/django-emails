@@ -89,7 +89,7 @@ class Idler(object):
                 else:
                     from_fallback = msg.get('From', 'No sender')
                     if settings.DEBUG:
-                        print("Didn't pass sender checks: %s" % from_fallback)
+                        print(f"Didn't pass sender checks: {from_fallback}")
                 self.M.uid('store', num, '+FLAGS', 'Seen')
         self.M.expunge()
 

@@ -16,7 +16,7 @@ class Email(models.Model):
     prefetch = ['to', 'to__subscription']
 
     def __str__(self):
-        return 'TO: %s, %s' % (self.to, self.subject)
+        return f'TO: {self.to}, {self.subject}'
 
     def get_absolute_url(self):
         return reverse('email', kwargs={'pk': self.pk})
@@ -44,7 +44,7 @@ class MailoutUser(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return 'User #%s receives %s.' % (self.user_id, self.category_id)
+        return f'User #{self.user_id} receives {self.category_id}.'
 
 
 def subscribe_user_to(user, category_key):

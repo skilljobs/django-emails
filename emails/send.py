@@ -23,7 +23,7 @@ def email(user, subj, template, context, check_pref=False,
             return
 
     subject = subj
-    from_email = "%s <%s>" % (settings.NAME, from_email)
+    from_email = f"{settings.NAME} <{from_email}>"
     if 'Feedback' in subj:
         subject = subj
     # subject must not contain newlines
@@ -40,13 +40,13 @@ def email(user, subj, template, context, check_pref=False,
         'category': check_pref or ''
     })
 
-    body = render_to_string('emails/%s.html' % template, context)
+    body = render_to_string(f'emails/{template}.html', context)
     text = render_as_text(body)
 
-    em.body = '%s<!--\n%s\n-->' % (body, text)
+    em.body = f'{body}<!--\n{text}\n-->'
     em.save()
     headers = {
-        'List-Unsubscribe': '<mailto:%s>' % UNSUBSCRIBE_EMAIL,
+        'List-Unsubscribe': f'<mailto:{UNSUBSCRIBE_EMAIL}>',
         'X-EMAIL-ID': str(em.pk),
         'X-USER-ID': str(user.pk),
     }

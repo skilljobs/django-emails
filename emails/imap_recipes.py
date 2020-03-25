@@ -32,12 +32,12 @@ def get_user(email):
 def unsubscribe_email(email):
     user = get_user(email)
     if not user:
-        return 'No such user %s' % email
+        return f'No such user {email}'
     for ad in user.ad_set.all():
         ad.off = True
         ad.save(staff=True)
     unsubscribe_all(user)
-    return 'Turned off ads for %s.' % email
+    return f'Turned off ads for {email}.'
 
 
 def unsubscribe(msg):

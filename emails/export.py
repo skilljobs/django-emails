@@ -20,7 +20,7 @@ def csv_out(qs, headers, row_export_func, file_name='export'):
     :return: a response with CSV data that will save as a download
     """
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="%s.csv"' % file_name
+    response['Content-Disposition'] = f'attachment; filename="{file_name}.csv"'
 
     writer = csv.writer(response)
     writer.writerow(headers)
