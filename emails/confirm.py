@@ -5,9 +5,10 @@ from django.conf import settings
 from allauth.account.models import EmailAddress
 
 
-def reset_bounces(profile):
-    profile.bounce = None
-    profile.save()
+def reset_bounces(user):
+    if hasattr(user, 'profile'):
+        user.profile.bounce = None
+        user.profile.save()
 
 
 def send_confirm_primary(user, request=False):

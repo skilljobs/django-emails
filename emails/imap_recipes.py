@@ -103,10 +103,11 @@ def note_bounce(msg):
             email = Email.objects.filter(to=user).last()
             email.bounced = True
             email.save()
-            if not user.bounce:
-                user.bounce = 0
-            user.bounce += 1
-            user.save()
+            if hasattr(user, 'profile'):
+                if not user.profile.bounce:
+                    user.profile.bounce = 0
+                user.profile.bounce += 1
+                user.profile.save()
             if settings.DEBUG:
                 print("Bounce noted.")
     if settings.DEBUG:
