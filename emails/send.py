@@ -13,8 +13,10 @@ def email(user, subj, template, context, check_pref=False,
 
     from emails.models import Email
 
-    if user.bounce not in (None, 0, 1):  # 1 bounce is ok, but not more
-        return False
+    # 1 bounce is ok, but not more
+    if hasattr(user, 'profile'):
+        if user.profile.bounce not in (None, 0, 1):
+            return False
 
     if check_pref:
         c = MailoutCategory.objects.get(pk=check_pref)
