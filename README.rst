@@ -46,7 +46,7 @@ Pointer record is used to check if the domain name is matching
 with the IP address from where the connection was initiated.
 Set it up with your hosting company for a VM sending your emails using
 reverse DNS:
-`Linode guide <https://www.linode.com/docs/networking/dns/setting-reverse-dns>`_
+`Linode guide <https://www.linode.com/docs/guides/configure-your-linode-for-reverse-dns/>`_
 
 DKIM records
 ~~~~~~~~~~~~
