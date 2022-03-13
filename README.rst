@@ -22,8 +22,7 @@ This app contains a set of tools needed including:
 - managing user's subscriptions to email categories
 - responsive HTML email template
 
-Read GMail Bulk Senders Guidelines:
-https://support.google.com/mail/answer/81126
+Read: `GMail Bulk Senders Guidelines <https://support.google.com/mail/answer/81126>`_
 
 DNS measures
 ------------
@@ -45,8 +44,7 @@ PTR or Pointer record
 Pointer record is used to check if the domain name is matching
 with the IP address from where the connection was initiated.
 Set it up with your hosting company for a VM sending your emails using
-reverse DNS:
-`Linode guide <https://www.linode.com/docs/guides/configure-your-linode-for-reverse-dns/>`_
+`reverse DNS (Linode guide) <https://www.linode.com/docs/guides/configure-your-linode-for-reverse-dns/>`_
 
 DKIM records
 ~~~~~~~~~~~~
@@ -54,4 +52,4 @@ These DNS records contain public domain key used for checking against
 signature on each email produced by private key::
 
     [DKIM_SELECTOR]._domainkey    TXT/SPF    k=rsa; p=[DKIM public key]
-	_domainkey                    TXT/SPF    o=~; r=[DEFAULT_FROM_EMAIL]
+	_domainkey                TXT/SPF    o=~; r=[DEFAULT_FROM_EMAIL]
