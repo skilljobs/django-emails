@@ -25,7 +25,7 @@ def email(user, subj, template, context, check_pref=False,
             return
 
     subject = subj
-    from_email = f"{settings.NAME} <{from_email}>"
+    from_email = f"{settings.SITE_NAME} <{from_email}>"
     if 'Feedback' in subj:
         subject = subj
     # subject must not contain newlines
@@ -33,7 +33,7 @@ def email(user, subj, template, context, check_pref=False,
     em = Email(to=user, subject=subject, body='')
     em.save()
     # add some generic_context
-    context.update(settings.GENERIC_CONTEXT)
+    context.update(getattr(settings, 'GENERIC_CONTEXT', {}))
     context.update({
         'user': user,
         'subject': subj,  # use original short subject here
