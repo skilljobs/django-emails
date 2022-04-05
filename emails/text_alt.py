@@ -17,7 +17,8 @@ Inspired by HTML to markdown.
 """
 
 from textwrap import wrap
-from lxml.html import document_fromstring
+from lxml.html import fromstring
+import emoji
 
 WRAP = 55
 
@@ -56,7 +57,8 @@ def justify_p(para, width):
 
 
 def render_as_text(html):
-    dom = document_fromstring(strip_whitespace(html))
+    html = emoji.demojize(strip_whitespace(html.strip()))
+    dom = fromstring(html)
     txt, lines = '', []
     for ID in ('content', 'header', 'footer'):
         div = dom.cssselect('#'+ID)[0]

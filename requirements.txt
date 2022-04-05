@@ -1,2 +1,3 @@
 dkimpy
 imaplib2
+emoji
