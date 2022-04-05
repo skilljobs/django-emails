@@ -1,25 +1,24 @@
-"""Test IMAP bounce alert and upload.
-"""
-from django.test import TestCase
-from django.core.mail import EmailMessage
-from django.conf import settings
-from emails import imap_client
+"""Test IMAP bounce alert and upload."""
+import os.path
+import smtplib
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import smtplib
-import os.path
+
+from django.conf import settings
+from django.test import TestCase
+
+from emails import imap_client
 
 EMAIL = settings.DEFAULT_FROM_EMAIL
-UPLOAD_FILE = settings.STATIC_ROOT + '/i/help.jpg'
+UPLOAD_FILE = settings.STATIC_ROOT + 'apple-touch-icon.png'
 UPLOAD_EMAIL = 'upload@' + settings.EMAIL_DOMAIN
 SIGNUP_EMAIL = 'test@' + settings.EMAIL_DOMAIN
 SSL = {'wsgi.url_scheme': 'https', 'HTTP_X_FORWARDED_SSL': 'TLSv1'}
 
 
 def send_email(subject='', to=EMAIL, sender=EMAIL, photo=0):
-    """Send emails on dev during tests with standard test runner
-    """
+    """Send emails on dev during tests with standard test runner"""
     m = MIMEMultipart()
     m['Subject'] = subject
     m['To'] = to
@@ -42,7 +41,7 @@ def send_email(subject='', to=EMAIL, sender=EMAIL, photo=0):
 
 
 def test_email_upload():
-    # email JPEG attachement
+    """Email JPEG attachment"""
     send_email('Upload test', to=UPLOAD_EMAIL,
                sender=SIGNUP_EMAIL,
                photo=UPLOAD_FILE)
