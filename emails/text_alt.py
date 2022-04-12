@@ -18,9 +18,19 @@ Inspired by HTML to markdown.
 
 from textwrap import wrap
 from lxml.html import fromstring
-import emoji
+
 
 WRAP = 55
+
+
+def ascii_emoji(s):
+    """ASCII emojis or everything"""
+    try:
+        import emoji
+        return emoji.demojize(s)
+    except ImportError:
+        import unicodedata
+        return unicodedata.normalize('NFKD', str(s)).encode('ASCII', 'ignore')
 
 
 def strip_whitespace(s):
@@ -57,7 +67,7 @@ def justify_p(para, width):
 
 
 def render_as_text(html):
-    html = emoji.demojize(strip_whitespace(html.strip()))
+    html = ascii_emoji(strip_whitespace(html.strip()))
     dom = fromstring(html)
     txt, lines = '', []
     for ID in ('content', 'header', 'footer'):
