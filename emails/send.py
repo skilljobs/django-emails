@@ -60,7 +60,7 @@ def email(user, subj, template, context, check_pref=False,
         try:
             m.send()
         except Exception as e:
-            logging.basicConfig(filename=settings.LOG)
+            logging.basicConfig(filename=settings.EMAIL_LOG)
             logging.warning(e)
             return False
     return True
