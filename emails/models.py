@@ -28,11 +28,11 @@ class Email(models.Model):
 class MailoutCategory(models.Model):
     """Category of emails being sent out."""
     key = models.CharField(max_length=12, primary_key=True)
-    default = models.BooleanField()
+    default = models.BooleanField()  # default subscribed
     title = models.CharField(max_length=60)
 
     def __str__(self):
-        return self.title
+        return self.key
 
 
 class MailoutUser(models.Model):

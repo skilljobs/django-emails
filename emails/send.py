@@ -1,11 +1,17 @@
-from django.template.loader import render_to_string
-from django.core import mail
-from django.conf import settings
-from emails.text_alt import render_as_text
-from emails.models import MailoutUser, MailoutCategory
 import logging
 
+from django.conf import settings
+from django.core import mail
+from django.template.loader import render_to_string
+
+from emails.models import MailoutUser, MailoutCategory
+from emails.text_alt import render_as_text
+
 UNSUBSCRIBE_EMAIL = 'unsubscribe@' + settings.EMAIL_DOMAIN
+
+
+def create_mailout_category(key, default=False):
+    MailoutCategory.objects.create(key=key, default=default)
 
 
 def email(user, subj, template, context, check_pref=False,
